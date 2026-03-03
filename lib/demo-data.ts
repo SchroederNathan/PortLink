@@ -2,110 +2,64 @@ import type { Portfolio } from "./types";
 
 export const demoPortfolios: Portfolio[] = [
   {
-    name: "Alex Chen",
-    title: "Full-Stack Engineer",
-    bio: "I build delightful web experiences with modern tools. Passionate about clean code, great UX, and open source. Currently exploring the intersection of AI and developer tooling.",
+    name: "Nathan Schroeder",
+    title: "Software Developer & UI/UX Designer",
+    bio: "I build cool stuff that actually feels good to use whether its a personal tool or a large-scale application. I care about the details. Elegant UI, great performance, and code that doesn't feel like a mess. I dabble in a lot of frontend and backend frameworks, but currently I'm focused on React Native development and Next.js for web.",
     links: {
-      github: "https://github.com/alexchen",
-      linkedin: "https://linkedin.com/in/alexchen",
-      twitter: "https://x.com/alexchen",
-      website: "https://alexchen.dev",
-      email: "alex@example.com",
+      github: "https://github.com/SchroederNathan",
+      linkedin: "https://www.linkedin.com/in/nathan-schroeder-a40aa2210/",
+      twitter: "https://x.com/nater02",
+      instagram: "https://www.instagram.com/nathanschroederr/",
+      website: "https://nathanschroeder.dev",
     },
     experience: [
       {
-        company: "Vercel",
-        role: "Senior Frontend Engineer",
-        period: "2023 — Present",
+        company: "Red Piston",
+        role: "Software Developer",
+        period: "2025 - Present",
         description:
-          "Building next-generation deployment infrastructure and developer tools. Led the redesign of the dashboard, improving load times by 40%.",
+          "Designing, building, and maintaining mobile apps in React Native, SwiftUI, and Java with products that reached over 130k monthly active users. Also working on several web applications using React and Laravel. Helped shape parts of the DevOps workflow, setting up servers, managing CI/CD pipelines, and working with AWS.",
       },
       {
-        company: "Stripe",
-        role: "Software Engineer",
-        period: "2021 — 2023",
+        company: "St. Clair College",
+        role: "Mobile Applications Development",
+        period: "2020 - 2024",
         description:
-          "Worked on the Payments team building checkout components used by millions of merchants worldwide.",
+          "Learned to develop, test, and deploy native mobile and web applications for multiple platforms. Designed user-friendly prototypes using Figma. Led teams to accomplish larger scale projects.",
       },
     ],
     projects: [
       {
-        name: "DevSync",
+        name: "Movati",
         description:
-          "Real-time collaborative code editor with AI-powered completions and pair programming features.",
-        url: "https://github.com/alexchen/devsync",
-        tags: ["TypeScript", "WebRTC", "React", "Node.js"],
+          "Class booking and account management app with 130K+ monthly active users.",
+        url: "https://movatiathletic.com",
+        tags: ["React Native", "Expo", "Laravel"],
       },
       {
-        name: "Chromatic",
-        description:
-          "A beautiful color palette generator for designers and developers with accessibility scoring.",
-        url: "https://chromatic.dev",
-        tags: ["Next.js", "Canvas API", "WCAG"],
+        name: "FocusGrid",
+        description: "Productivity app for focused work.",
+        url: "https://focusgridapp.com",
+        tags: ["React Native", "Expo"],
       },
       {
-        name: "TinyORM",
+        name: "ThemeGen",
         description:
-          "Lightweight TypeScript ORM for SQLite with zero dependencies and full type safety.",
-        tags: ["TypeScript", "SQLite", "Open Source"],
+          "Theme generator with WCAG contrast auditing.",
+        url: "https://themegen.dev",
+        tags: ["Next.js", "Tailwind CSS", "WCAG"],
       },
     ],
     skills: [
-      "TypeScript",
-      "React",
+      "React Native",
       "Next.js",
-      "Node.js",
-      "PostgreSQL",
-      "Tailwind CSS",
-      "GraphQL",
-      "AWS",
-      "Docker",
-      "Figma",
-    ],
-  },
-  {
-    name: "Priya Sharma",
-    title: "UX Designer & Developer",
-    bio: "Design-minded developer who bridges the gap between pixels and code. I care deeply about accessibility and inclusive design.",
-    links: {
-      github: "https://github.com/priyasharma",
-      linkedin: "https://linkedin.com/in/priyasharma",
-      website: "https://priya.design",
-      email: "priya@example.com",
-    },
-    experience: [
-      {
-        company: "Figma",
-        role: "Design Engineer",
-        period: "2022 — Present",
-        description:
-          "Building design system components and prototyping tools. Championed accessibility improvements across the platform.",
-      },
-    ],
-    projects: [
-      {
-        name: "a11y-toolkit",
-        description:
-          "Open-source accessibility testing toolkit with automated WCAG compliance checking.",
-        url: "https://github.com/priyasharma/a11y-toolkit",
-        tags: ["Accessibility", "React", "Testing"],
-      },
-      {
-        name: "Palette",
-        description:
-          "Design token management system for scaling design systems across products.",
-        tags: ["Design Systems", "CSS", "TypeScript"],
-      },
-    ],
-    skills: [
-      "Figma",
-      "React",
-      "CSS",
-      "Accessibility",
-      "Design Systems",
-      "User Research",
-      "Prototyping",
       "TypeScript",
+      "UI/UX Design",
+      "SwiftUI",
+      "Laravel",
+      "Tailwind CSS",
+      "AWS",
+      "Figma",
     ],
   },
 ];

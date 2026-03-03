@@ -6,7 +6,7 @@ export async function GET() {
   const logoData = await readFile(
     join(process.cwd(), "public/favicons/android-chrome-512x512.png")
   );
-  const logoBase64 = `data:image/png;base64,${logoData.toString("base64")}`;
+  const logoSrc = `data:image/png;base64,${logoData.toString("base64")}`;
 
   return new ImageResponse(
     (
@@ -24,16 +24,12 @@ export async function GET() {
           gap: 24,
         }}
       >
-        <img src={logoBase64} width={120} height={120} alt="" />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={logoSrc} width={120} height={120} alt="" />
         <div style={{ fontSize: 72, fontWeight: 700, letterSpacing: -2 }}>
           PortLink
         </div>
-        <div
-          style={{
-            fontSize: 28,
-            color: "#a3a3a3",
-          }}
-        >
+        <div style={{ fontSize: 28, color: "#a3a3a3" }}>
           Build your portfolio in 60 seconds
         </div>
       </div>
