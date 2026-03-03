@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-export const baseUrl = "https://portlink.dev";
+export const baseUrl = "https://portlink.me";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

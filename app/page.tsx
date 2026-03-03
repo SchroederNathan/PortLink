@@ -24,7 +24,7 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     name: "PortLink",
-    url: "https://portlink.dev",
+    url: "https://portlink.me",
     description:
       "Create a free portfolio website in 60 seconds. No hosting, no accounts, no database. Your entire portfolio is encoded into a shareable URL.",
     applicationCategory: "DesignApplication",

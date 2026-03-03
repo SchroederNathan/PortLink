@@ -1,8 +1,13 @@
 import { ImageResponse } from "next/og";
-
-export const runtime = "edge";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 
 export async function GET() {
+  const logoData = await readFile(
+    join(process.cwd(), "public/favicons/android-chrome-512x512.png")
+  );
+  const logoBase64 = `data:image/png;base64,${logoData.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -16,8 +21,10 @@ export async function GET() {
           backgroundColor: "#000",
           color: "#fff",
           fontFamily: "system-ui",
+          gap: 24,
         }}
       >
+        <img src={logoBase64} width={120} height={120} alt="" />
         <div style={{ fontSize: 72, fontWeight: 700, letterSpacing: -2 }}>
           PortLink
         </div>
@@ -25,10 +32,9 @@ export async function GET() {
           style={{
             fontSize: 28,
             color: "#a3a3a3",
-            marginTop: 16,
           }}
         >
-          Build your portfolio in 60 seconds. Just a URL.
+          Build your portfolio in 60 seconds
         </div>
       </div>
     ),

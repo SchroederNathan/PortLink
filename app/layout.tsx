@@ -13,7 +13,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://portlink.dev"),
+  metadataBase: new URL("https://portlink.me"),
+  icons: {
+    icon: [
+      { url: "/favicons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    shortcut: "/favicons/favicon.ico",
+    apple: "/favicons/apple-touch-icon.png",
+  },
+  manifest: "/favicons/site.webmanifest",
   title: {
     default: "PortLink | Free Portfolio Builder in a URL",
     template: "%s | PortLink",
@@ -35,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://portlink.dev",
+    url: "https://portlink.me",
     siteName: "PortLink",
     title: "PortLink | Free Portfolio Builder in a URL",
     description:
