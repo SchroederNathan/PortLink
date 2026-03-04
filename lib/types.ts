@@ -3,6 +3,7 @@ export interface Portfolio {
   title: string;
   bio: string;
   avatar?: string;
+  accentColor?: string;
   links: Record<string, string | undefined>;
   experience: Array<{
     company: string;
