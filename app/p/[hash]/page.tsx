@@ -39,8 +39,14 @@ export default function PortfolioPage() {
     );
   }
 
+  const accentColor = portfolio.accentColor ?? "#2563eb";
+
   return (
-    <section>
+    <section
+      style={
+        { "--accent": accentColor } as React.CSSProperties
+      }
+    >
       <Header portfolio={portfolio} />
       <About bio={portfolio.bio} />
       <Experience experience={portfolio.experience} />
