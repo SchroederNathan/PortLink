@@ -9,6 +9,7 @@ import LinksForm from "@/components/create/LinksForm";
 import ExperienceForm from "@/components/create/ExperienceForm";
 import ProjectsForm from "@/components/create/ProjectsForm";
 import SkillsForm from "@/components/create/SkillsForm";
+import TechStackForm from "@/components/create/TechStackForm";
 
 const ACCENT_COLORS = [
   { label: "Blue",   value: "#2563eb" },
@@ -29,6 +30,7 @@ const emptyPortfolio: Portfolio = {
   experience: [],
   projects: [],
   skills: [],
+  techStack: [],
   accentColor: "#2563eb",
 };
 
@@ -112,6 +114,7 @@ export default function CreatePage() {
         <ExperienceForm data={data} onChange={setData} />
         <ProjectsForm data={data} onChange={setData} />
         <SkillsForm data={data} onChange={setData} />
+        <TechStackForm data={data} onChange={setData} />
 
         {/* Accent Color Picker */}
         <div>

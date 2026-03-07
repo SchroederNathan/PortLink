@@ -9,6 +9,7 @@ import About from "@/components/portfolio/About";
 import Experience from "@/components/portfolio/Experience";
 import Projects from "@/components/portfolio/Projects";
 import Skills from "@/components/portfolio/Skills";
+import TechStack from "@/components/portfolio/TechStack";
 import Footer from "@/components/portfolio/Footer";
 
 export default function PortfolioPage() {
@@ -52,6 +53,7 @@ export default function PortfolioPage() {
       <Experience experience={portfolio.experience} />
       <Projects projects={portfolio.projects} />
       <Skills skills={portfolio.skills} />
+      <TechStack techStack={portfolio.techStack ?? []} />
       <Footer />
     </section>
   );

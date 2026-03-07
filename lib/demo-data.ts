@@ -61,5 +61,6 @@ export const demoPortfolios: Portfolio[] = [
       "AWS",
       "Figma",
     ],
+    techStack: ["typescript", "react", "nextjs", "react-native", "tailwind", "laravel", "aws", "postgresql"],
   },
 ];

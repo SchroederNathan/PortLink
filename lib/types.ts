@@ -18,4 +18,5 @@ export interface Portfolio {
     tags: string[];
   }>;
   skills: string[];
+  techStack: string[];
 }
