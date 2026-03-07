@@ -44,7 +44,12 @@ export default function Header({ portfolio }: { portfolio: Portfolio }) {
         </div>
       </nav>
 
-      <h1 className="mb-2 text-2xl font-semibold tracking-tighter">{name}</h1>
+      <h1
+        className="mb-2 text-2xl font-semibold tracking-tighter"
+        style={{ color: "var(--accent)" }}
+      >
+        {name}
+      </h1>
       <p className="mb-4 text-neutral-600 dark:text-neutral-400">{title}</p>
 
       {socialLinks.length > 0 && (
@@ -52,7 +57,8 @@ export default function Header({ portfolio }: { portfolio: Portfolio }) {
           {socialLinks.map(({ key, url, label, external }) => (
             <li key={key}>
               <a
-                className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+                className="flex items-center transition-all"
+                style={{ color: "var(--accent)" }}
                 rel={external ? "noopener noreferrer" : undefined}
                 target={external ? "_blank" : undefined}
                 href={url}

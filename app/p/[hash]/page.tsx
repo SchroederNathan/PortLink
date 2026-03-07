@@ -9,6 +9,7 @@ import About from "@/components/portfolio/About";
 import Experience from "@/components/portfolio/Experience";
 import Projects from "@/components/portfolio/Projects";
 import Skills from "@/components/portfolio/Skills";
+import TechStack from "@/components/portfolio/TechStack";
 import Footer from "@/components/portfolio/Footer";
 
 export default function PortfolioPage() {
@@ -39,13 +40,20 @@ export default function PortfolioPage() {
     );
   }
 
+  const accentColor = portfolio.accentColor ?? "#2563eb";
+
   return (
-    <section>
+    <section
+      style={
+        { "--accent": accentColor } as React.CSSProperties
+      }
+    >
       <Header portfolio={portfolio} />
       <About bio={portfolio.bio} />
       <Experience experience={portfolio.experience} />
       <Projects projects={portfolio.projects} />
       <Skills skills={portfolio.skills} />
+      <TechStack techStack={portfolio.techStack ?? []} />
       <Footer />
     </section>
   );
