@@ -12,6 +12,14 @@ export const demoPortfolios: Portfolio[] = [
       instagram: "https://www.instagram.com/nathanschroederr/",
       website: "https://nathanschroeder.dev",
     },
+    socialLinks: {
+      github: "https://github.com/SchroederNathan",
+      linkedin: "https://www.linkedin.com/in/nathan-schroeder-a40aa2210/",
+      twitter: "https://x.com/nater02",
+      email: "nathan@nathanschroeder.dev",
+      website: "https://nathanschroeder.dev",
+    },
+    contactBlurb: "Open to new opportunities and collaborations. Let's build something great together.",
     experience: [
       {
         company: "Red Piston",

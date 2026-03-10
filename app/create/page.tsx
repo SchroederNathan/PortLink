@@ -27,6 +27,8 @@ const emptyPortfolio: Portfolio = {
   title: "",
   bio: "",
   links: {},
+  socialLinks: {},
+  contactBlurb: "",
   experience: [],
   projects: [],
   skills: [],
@@ -52,6 +54,11 @@ export default function CreatePage() {
 
   const generate = () => {
     if (!isValid) return;
+    const socialLinksClean = data.socialLinks
+      ? Object.fromEntries(
+          Object.entries(data.socialLinks).filter(([, v]) => v)
+        )
+      : undefined;
     const cleaned: Portfolio = {
       ...data,
       avatar: data.avatar || undefined,
@@ -59,6 +66,8 @@ export default function CreatePage() {
       links: Object.fromEntries(
         Object.entries(data.links).filter(([, v]) => v)
       ),
+      socialLinks: Object.keys(socialLinksClean ?? {}).length ? (socialLinksClean as Portfolio["socialLinks"]) : undefined,
+      contactBlurb: data.contactBlurb?.trim() || undefined,
       experience: data.experience.filter((e) => e.company && e.role),
       projects: data.projects
         .filter((p) => p.name)
