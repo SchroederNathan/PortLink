@@ -9,15 +9,31 @@ import LinksForm from "@/components/create/LinksForm";
 import ExperienceForm from "@/components/create/ExperienceForm";
 import ProjectsForm from "@/components/create/ProjectsForm";
 import SkillsForm from "@/components/create/SkillsForm";
+import TechStackForm from "@/components/create/TechStackForm";
+
+const ACCENT_COLORS = [
+  { label: "Blue",   value: "#2563eb" },
+  { label: "Violet", value: "#7c3aed" },
+  { label: "Cyan",   value: "#0891b2" },
+  { label: "Green",  value: "#16a34a" },
+  { label: "Amber",  value: "#d97706" },
+  { label: "Orange", value: "#ea580c" },
+  { label: "Rose",   value: "#e11d48" },
+  { label: "Pink",   value: "#db2777" },
+];
 
 const emptyPortfolio: Portfolio = {
   name: "",
   title: "",
   bio: "",
   links: {},
+  socialLinks: {},
+  contactBlurb: "",
   experience: [],
   projects: [],
   skills: [],
+  techStack: [],
+  accentColor: "#2563eb",
 };
 
 export default function CreatePage() {
@@ -38,12 +54,20 @@ export default function CreatePage() {
 
   const generate = () => {
     if (!isValid) return;
+    const socialLinksClean = data.socialLinks
+      ? Object.fromEntries(
+          Object.entries(data.socialLinks).filter(([, v]) => v)
+        )
+      : undefined;
     const cleaned: Portfolio = {
       ...data,
       avatar: data.avatar || undefined,
+      accentColor: data.accentColor || "#2563eb",
       links: Object.fromEntries(
         Object.entries(data.links).filter(([, v]) => v)
       ),
+      socialLinks: Object.keys(socialLinksClean ?? {}).length ? (socialLinksClean as Portfolio["socialLinks"]) : undefined,
+      contactBlurb: data.contactBlurb?.trim() || undefined,
       experience: data.experience.filter((e) => e.company && e.role),
       projects: data.projects
         .filter((p) => p.name)
@@ -60,6 +84,8 @@ export default function CreatePage() {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const selectedAccent = data.accentColor ?? "#2563eb";
 
   return (
     <section className="pb-20">
@@ -97,6 +123,65 @@ export default function CreatePage() {
         <ExperienceForm data={data} onChange={setData} />
         <ProjectsForm data={data} onChange={setData} />
         <SkillsForm data={data} onChange={setData} />
+        <TechStackForm data={data} onChange={setData} />
+
+        {/* Accent Color Picker */}
+        <div>
+          <h2 className="text-sm font-medium text-neutral-900 dark:text-neutral-100 mb-3">
+            Accent Color
+          </h2>
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-3">
+            Applied to your name, section headings, skill badges, and links.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            {ACCENT_COLORS.map(({ label, value }) => (
+              <button
+                key={value}
+                type="button"
+                title={label}
+                onClick={() => setData((d) => ({ ...d, accentColor: value }))}
+                className="relative w-8 h-8 rounded-full transition-all focus:outline-none"
+                style={{ backgroundColor: value }}
+              >
+                {selectedAccent === value && (
+                  <span className="absolute inset-0 flex items-center justify-center">
+                    <svg
+                      className="w-4 h-4 text-white drop-shadow"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={3}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                )}
+                <span className="sr-only">{label}</span>
+              </button>
+            ))}
+          </div>
+          {/* Live preview sample */}
+          <div
+            className="mt-4 p-3 border border-neutral-200 dark:border-neutral-800 rounded-sm text-sm"
+            style={{ "--accent": selectedAccent } as React.CSSProperties}
+          >
+            <p className="font-semibold text-base" style={{ color: "var(--accent)" }}>
+              Your Name
+            </p>
+            <p className="text-neutral-500 dark:text-neutral-400 text-xs mb-2">Full Stack Developer</p>
+            <div className="flex gap-1 flex-wrap">
+              {["React", "TypeScript", "Node.js"].map((s) => (
+                <span
+                  key={s}
+                  className="text-xs px-2 py-0.5 rounded-full border font-medium"
+                  style={{ color: "var(--accent)", borderColor: "var(--accent)" }}
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="mt-8 flex items-center justify-between text-sm text-neutral-500 font-mono">
