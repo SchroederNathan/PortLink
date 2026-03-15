@@ -12,6 +12,7 @@ export interface Portfolio {
   bio: string;
   avatar?: string;
   accentColor?: string;
+  layoutTheme?: "minimal" | "bold" | "creative";
   links: Record<string, string | undefined>;
   socialLinks?: SocialLinks;
   contactBlurb?: string;
