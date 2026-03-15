@@ -17,17 +17,41 @@ export default function Projects({
 
   return (
     <section className="my-8">
-      <h2 className="mb-4 text-xl font-semibold tracking-tighter">Projects</h2>
+      <h2
+        className="mb-4 text-xl font-semibold tracking-tighter"
+        style={{ color: "var(--accent)" }}
+      >
+        Projects
+      </h2>
       <div className="space-y-4">
         {projects.map((project, i) => (
           <div key={i} className="flex flex-col space-y-1 mb-4">
             <div className="w-full flex flex-col md:flex-row space-x-0 md:space-x-2">
-              <div className="text-neutral-600 dark:text-neutral-400 w-[140px] shrink-0 flex flex-wrap gap-1">
+              <div className="w-[140px] shrink-0 flex flex-wrap gap-1">
                 {project.tags.slice(0, 2).map((tag) => (
-                  <span key={tag} className="text-sm">{tag}</span>
+                  <span
+                    key={tag}
+                    className="text-xs px-2 py-0.5 rounded-full border font-medium"
+                    style={{
+                      color: "var(--accent)",
+                      borderColor: "var(--accent)",
+                      opacity: 0.8,
+                    }}
+                  >
+                    {tag}
+                  </span>
                 ))}
                 {project.tags.length > 2 && (
-                  <span className="text-sm">+{project.tags.length - 2}</span>
+                  <span
+                    className="text-xs px-2 py-0.5 rounded-full border font-medium"
+                    style={{
+                      color: "var(--accent)",
+                      borderColor: "var(--accent)",
+                      opacity: 0.6,
+                    }}
+                  >
+                    +{project.tags.length - 2}
+                  </span>
                 )}
               </div>
               <div>
@@ -40,7 +64,8 @@ export default function Projects({
                       href={project.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
+                      className="transition-all"
+                      style={{ color: "var(--accent)" }}
                     >
                       <ArrowIcon />
                     </a>

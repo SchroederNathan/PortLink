@@ -3,10 +3,27 @@ export default function Skills({ skills }: { skills: string[] }) {
 
   return (
     <section className="my-8">
-      <h2 className="mb-4 text-xl font-semibold tracking-tighter">Skills</h2>
-      <p className="text-neutral-800 dark:text-neutral-200">
-        {skills.join(", ")}
-      </p>
+      <h2
+        className="mb-4 text-xl font-semibold tracking-tighter"
+        style={{ color: "var(--accent)" }}
+      >
+        Skills
+      </h2>
+      <div className="flex flex-wrap gap-2">
+        {skills.map((skill) => (
+          <span
+            key={skill}
+            className="text-sm px-2.5 py-0.5 rounded-full font-medium border"
+            style={{
+              color: "var(--accent)",
+              borderColor: "var(--accent)",
+              opacity: 0.9,
+            }}
+          >
+            {skill}
+          </span>
+        ))}
+      </div>
     </section>
   );
 }

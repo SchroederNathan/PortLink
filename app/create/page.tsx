@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import type { Portfolio } from "@/lib/types";
 import { encode } from "@/lib/codec";
@@ -9,21 +9,79 @@ import LinksForm from "@/components/create/LinksForm";
 import ExperienceForm from "@/components/create/ExperienceForm";
 import ProjectsForm from "@/components/create/ProjectsForm";
 import SkillsForm from "@/components/create/SkillsForm";
+import TechStackForm from "@/components/create/TechStackForm";
+
+const ACCENT_COLORS = [
+  { label: "Blue",   value: "#2563eb" },
+  { label: "Violet", value: "#7c3aed" },
+  { label: "Cyan",   value: "#0891b2" },
+  { label: "Green",  value: "#16a34a" },
+  { label: "Amber",  value: "#d97706" },
+  { label: "Orange", value: "#ea580c" },
+  { label: "Rose",   value: "#e11d48" },
+  { label: "Pink",   value: "#db2777" },
+];
+
+const LAYOUT_THEMES = [
+  {
+    value: "minimal" as const,
+    label: "Minimal",
+    description: "Clean & elegant, generous whitespace",
+    bg: "#ffffff",
+    fg: "#111",
+    border: "#e5e5e5",
+  },
+  {
+    value: "bold" as const,
+    label: "Bold",
+    description: "High contrast, electric accent",
+    bg: "#111111",
+    fg: "#fff",
+    border: "#333",
+  },
+  {
+    value: "creative" as const,
+    label: "Creative",
+    description: "Serif headings, 2-col layout",
+    bg: "#faf8f5",
+    fg: "#222",
+    border: "#e8e4de",
+  },
+];
 
 const emptyPortfolio: Portfolio = {
   name: "",
   title: "",
   bio: "",
   links: {},
+  socialLinks: {},
+  contactBlurb: "",
   experience: [],
   projects: [],
   skills: [],
+  techStack: [],
+  accentColor: "#2563eb",
+  layoutTheme: "minimal",
 };
 
 export default function CreatePage() {
-  const [data, setData] = useState<Portfolio>(emptyPortfolio);
+  const [data, setData] = useState<Portfolio>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("portbuilder-layout-theme");
+      if (saved === "minimal" || saved === "bold" || saved === "creative") {
+        return { ...emptyPortfolio, layoutTheme: saved };
+      }
+    }
+    return emptyPortfolio;
+  });
   const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (data.layoutTheme) {
+      localStorage.setItem("portbuilder-layout-theme", data.layoutTheme);
+    }
+  }, [data.layoutTheme]);
 
   const estimatedLength = useMemo(() => {
     try {
@@ -38,12 +96,21 @@ export default function CreatePage() {
 
   const generate = () => {
     if (!isValid) return;
+    const socialLinksClean = data.socialLinks
+      ? Object.fromEntries(
+          Object.entries(data.socialLinks).filter(([, v]) => v)
+        )
+      : undefined;
     const cleaned: Portfolio = {
       ...data,
       avatar: data.avatar || undefined,
+      accentColor: data.accentColor || "#2563eb",
+      layoutTheme: data.layoutTheme ?? "minimal",
       links: Object.fromEntries(
         Object.entries(data.links).filter(([, v]) => v)
       ),
+      socialLinks: Object.keys(socialLinksClean ?? {}).length ? (socialLinksClean as Portfolio["socialLinks"]) : undefined,
+      contactBlurb: data.contactBlurb?.trim() || undefined,
       experience: data.experience.filter((e) => e.company && e.role),
       projects: data.projects
         .filter((p) => p.name)
@@ -60,6 +127,8 @@ export default function CreatePage() {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const selectedAccent = data.accentColor ?? "#2563eb";
 
   return (
     <section className="pb-20">
@@ -97,6 +166,128 @@ export default function CreatePage() {
         <ExperienceForm data={data} onChange={setData} />
         <ProjectsForm data={data} onChange={setData} />
         <SkillsForm data={data} onChange={setData} />
+        <TechStackForm data={data} onChange={setData} />
+
+        {/* Accent Color Picker */}
+        <div>
+          <h2 className="text-sm font-medium text-neutral-900 dark:text-neutral-100 mb-3">
+            Accent Color
+          </h2>
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-3">
+            Applied to your name, section headings, skill badges, and links.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            {ACCENT_COLORS.map(({ label, value }) => (
+              <button
+                key={value}
+                type="button"
+                title={label}
+                onClick={() => setData((d) => ({ ...d, accentColor: value }))}
+                className="relative w-8 h-8 rounded-full transition-all focus:outline-none"
+                style={{ backgroundColor: value }}
+              >
+                {selectedAccent === value && (
+                  <span className="absolute inset-0 flex items-center justify-center">
+                    <svg
+                      className="w-4 h-4 text-white drop-shadow"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={3}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                )}
+                <span className="sr-only">{label}</span>
+              </button>
+            ))}
+          </div>
+          {/* Live accent preview */}
+          <div
+            className="mt-4 p-3 border border-neutral-200 dark:border-neutral-800 rounded-sm text-sm"
+            style={{ "--accent": selectedAccent } as React.CSSProperties}
+          >
+            <p className="font-semibold text-base" style={{ color: "var(--accent)" }}>
+              Your Name
+            </p>
+            <p className="text-neutral-500 dark:text-neutral-400 text-xs mb-2">Full Stack Developer</p>
+            <div className="flex gap-1 flex-wrap">
+              {["React", "TypeScript", "Node.js"].map((s) => (
+                <span
+                  key={s}
+                  className="text-xs px-2 py-0.5 rounded-full border font-medium"
+                  style={{ color: "var(--accent)", borderColor: "var(--accent)" }}
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Layout Theme Picker */}
+        <div>
+          <h2 className="text-sm font-medium text-neutral-900 dark:text-neutral-100 mb-3">
+            Layout Theme
+          </h2>
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-3">
+            Choose how your portfolio is presented.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {LAYOUT_THEMES.map((theme) => {
+              const isSelected = (data.layoutTheme ?? "minimal") === theme.value;
+              return (
+                <button
+                  key={theme.value}
+                  type="button"
+                  onClick={() => setData((d) => ({ ...d, layoutTheme: theme.value }))}
+                  className={`relative rounded-lg p-4 text-left transition-all border-2 ${
+                    isSelected
+                      ? "border-neutral-900 dark:border-neutral-100 ring-1 ring-neutral-900 dark:ring-neutral-100"
+                      : "border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600"
+                  }`}
+                >
+                  {/* Theme preview swatch */}
+                  <div
+                    className="rounded-md mb-3 h-16 flex items-end p-2"
+                    style={{
+                      backgroundColor: theme.bg,
+                      border: `1px solid ${theme.border}`,
+                    }}
+                  >
+                    <div className="flex gap-1">
+                      {[1, 0.6, 0.8].map((w, i) => (
+                        <div
+                          key={i}
+                          className="h-1.5 rounded-full"
+                          style={{
+                            backgroundColor: theme.fg,
+                            width: `${w * 32}px`,
+                            opacity: 0.5,
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                    {theme.label}
+                  </p>
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+                    {theme.description}
+                  </p>
+                  {isSelected && (
+                    <span className="absolute top-2 right-2">
+                      <svg className="w-4 h-4 text-neutral-900 dark:text-neutral-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       <div className="mt-8 flex items-center justify-between text-sm text-neutral-500 font-mono">
